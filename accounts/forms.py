@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.core.validators import RegexValidator
 
 from .models import Profile
@@ -26,10 +26,59 @@ last_name_validator = RegexValidator(
 )
 
 class SignupForm(UserCreationForm):
-    username = forms.CharField(label='Username', max_length=50, validators=[username_validator], required=True)
-    email = forms.EmailField(label='Email', max_length=254, validators=[email_validator], required=True)
-    first_name = forms.CharField(label='First Name', max_length=30, validators=[first_name_validator], required=True)
-    last_name = forms.CharField(label='Last Name', max_length=30, validators=[last_name_validator], required=True)
+    username = forms.CharField(
+        label='',
+        max_length=50,
+        validators=[username_validator],
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Username',
+        }))
+    email = forms.EmailField(
+        label='',
+        max_length=254,
+        validators=[email_validator],
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Email',
+        })
+    )
+    first_name = forms.CharField(
+        label='',
+        max_length=30,
+        validators=[first_name_validator],
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'First name',
+        })
+    )
+    last_name = forms.CharField(
+        label='',
+        max_length=30,
+        validators=[last_name_validator],
+        required=True,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Last name',
+        })
+    )
+    password1 = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Password',
+        })
+    )
+    password2 = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Confirm password',
+        })
+    )
 
     class Meta:
         model = get_user_model()
@@ -49,3 +98,20 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['profile_picture', 'bio', 'birth_date']
+
+
+class CustomAuthenticationForm(AuthenticationForm):
+    username = forms.CharField(
+        label='',
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Username',
+        })
+    )
+    password = forms.CharField(
+        label='',
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
+            'placeholder': 'Password',
+        })
+    )

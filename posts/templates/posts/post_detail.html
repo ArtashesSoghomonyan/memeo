@@ -1,26 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Memeo - post detail</title>
-</head>
-<body>
-    {% if user == post.author %}
-    <a href="{% url 'post_edit' post.id %}">Update</a>
-    <a href="{% url 'post_delete' post.id %}">Delete</a>
-    {% endif %}
-    <h2>{{ post.author.username }} on {{ post.publication_date }}</h2>
-    <img src="{{ post.image.url }}" alt="Post image" height="200">
-    <p>{{ post.description }}</p>
+{% extends 'base.html' %}
 
-    <form method="post" action="{% url 'post_like' post.id %}">
-        {% csrf_token %}
-        {% if is_liked %}
-            <input type="Submit" value="Unlike"> {{ like_count }}
-        {% else %}
-            <input type="Submit" value="Like"> {{ like_count }}
-        {% endif %}
-    </form>
-</body>
-</html>
+{% block content %}
+<div class="max-w-lg mx-auto bg-white rounded-lg shadow p-6 mt-2">
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-xl font-bold text-gray-800">{{ post.author.username }}</h2>
+    <span class="text-gray-500 text-sm">{{ post.publication_date }}</span>
+    {% if user == post.author %}
+      <div class="flex space-x-2">
+        <a href="{% url 'post_edit' post.id %}" class="text-indigo-600 hover:underline">Edit</a>
+        <a href="{% url 'post_delete' post.id %}" class="text-red-500 hover:underline">Delete</a>
+      </div>
+    {% endif %}
+  </div>
+  <img src="{{ post.image.url }}" alt="Post image" class="w-full rounded mb-4">
+  <p class="text-gray-800 mb-4">{{ post.description }}</p>
+  <span class="text-sm text-gray-500 mb-4">{{ like_count }} like(s)</span>
+  <form method="post" action="{% url 'post_like' post.id %}" class="mb-4">
+    {% csrf_token %}
+    {% if is_liked %}
+      <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Unlike</button>
+    {% else %}
+      <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Like</button>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

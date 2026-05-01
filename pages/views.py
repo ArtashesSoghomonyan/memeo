@@ -7,6 +7,7 @@ def home(request):
     """ View for the home page. """
 
     context = {
+        'title': 'Homepage',
         'posts': Post.objects.all().order_by('-publication_date'),
     }
 

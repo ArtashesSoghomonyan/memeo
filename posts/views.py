@@ -23,6 +23,7 @@ def create_post(request):
         form = PostForm()
 
     context = {
+        'title': 'Create Post',
         'form': form,
     }
 
@@ -35,6 +36,7 @@ def post_detail(request, pk):
     like_count = post.likes.count()
     is_liked = request.user.is_authenticated and post.likes.filter(id=request.user.id).exists()
     context = {
+        'title': f'{post.description[:30]}',
         'post': post,
         'like_count': like_count,
         'is_liked': is_liked,
@@ -61,6 +63,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
 
     context = {
+        'title': f'Edit Post - {post.description[:30]}',
         'form': form,
         'post': post,
     }
@@ -82,6 +85,7 @@ def post_delete(request, pk):
         return redirect('home')
     else:
         context = {
+            'title': f'Delete Post - {post.description[:30]}',
             'post': post,
         }
         return render(request, 'posts/post_delete.html', context)

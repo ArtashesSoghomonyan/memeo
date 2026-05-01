@@ -1,21 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
 {% if user.is_authenticated %}
-<h1>Hello {{ user.username }}</h1>
-<form method="post" action="{% url 'logout' %}">
-  {% csrf_token %}
-  <input type="submit" value="Logout">
-</form>
-<img src="{{ user.profile.profile_picture.url }}" alt="Avatar image" height="100">
 
 {% for post in posts %}
-<hr>
-<p>@{{ post.author.username }} at {{ post.publication_date }}</p>
-<a href="{% url 'post_detail' post.pk %}">View post details</a><br>
-<img src="{{ post.image.url }}" alt="Post image" height="200">
-<p>{{ post.description }}</p>
-<hr>
+  <div class="bg-white rounded-lg shadow p-4 mb-4 max-w-lg mx-auto mt-5">
+    <div class="flex items-center justify-between mb-2">
+      <a href="{% url 'post_detail' post.id %}" class="text-lg font-semibold text-blue-700 hover:underline">
+        @{{ post.author.username }}
+      </a>
+      {% if user == post.author %}
+        <div class="flex space-x-2">
+          <a href="{% url 'post_edit' post.id %}" class="text-indigo-600 hover:underline">Edit</a>
+          <a href="{% url 'post_delete' post.id %}" class="text-red-500 hover:underline">Delete</a>
+        </div>
+      {% endif %}
+      <span class="text-gray-500 text-sm">{{ post.publication_date }}</span>
+    </div>
+    <!-- Image -->
+    <img src="{{ post.image.url }}" alt="Post image" class="w-full max-h-96 object-contain rounded">
+    <!-- Caption -->
+    <p class="mt-2 text-gray-800">{{ post.description }}</p>
+    <!-- Likes count -->
+    <p class="text-sm text-gray-500 mt-1">{{ post.likes.count }} like(s)</p>
+  </div>
 {% endfor %}
 
 {% else %}
 <h1>Welcome to Memeo!</h1>
 <h2><a href="{% url 'login' %}">Login</a> or <a href="{% url 'signup' %}">Sign up</a> to view some posts!</h2>
 {% endif %}
+
+{% endblock content %}

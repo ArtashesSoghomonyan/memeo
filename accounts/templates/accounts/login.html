@@ -1,5 +1,13 @@
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Login">
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="max-w-sm mx-auto bg-white rounded-lg shadow p-6 mt-10">
+  <h1 class="text-2xl font-bold mb-4">Login</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 w-full">Log in</button>
+  </form>
+  <p class="mt-2 text-sm">Don't have an account? <a href="{% url 'signup' %}" class="text-indigo-600 hover:underline">Sign up</a></p>
+</div>
+{% endblock content %}

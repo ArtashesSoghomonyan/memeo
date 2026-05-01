@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
+	  {% if title %}
+			Memeo - {{ title }}
+		{% else %}
+		  Memeo
+		{% endif %}
+	</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	{% block head %}{% endblock head %}
+</head>
+<body>
+  <nav class="bg-white shadow p-4 flex justify-between sticky top-0">
+    <a href="{% url 'home' %}" class="text-xl font-bold text-indigo-600">Memeo</a>
+    <div>
+      {% if user.is_authenticated %}
+        <span class="mr-4"><a href="{% url 'profile' %}">@{{ user.username }}</a></span>
+        <a href="{% url 'create_post' %}" class="mr-2 text-indigo-600 hover:underline">New Post</a>
+        <form method="post" action="{% url 'logout' %}" class="inline">
+          {% csrf_token %}
+          <button type="submit" class="text-red-500 hover:underline">Logout</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="mr-2 text-indigo-600 hover:underline">Login</a>
+        <a href="{% url 'signup' %}" class="text-indigo-600 hover:underline">Sign up</a>
+      {% endif %}
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>
