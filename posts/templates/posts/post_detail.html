@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Memeo - post detail</title>
+</head>
+<body>
+    {% if user == post.author %}
+    <a href="{% url 'post_edit' post.id %}">Update</a>
+    <a href="{% url 'post_delete' post.id %}">Delete</a>
+    {% endif %}
+    <h2>{{ post.author.username }} on {{ post.publication_date }}</h2>
+    <img src="{{ post.image.url }}" alt="Post image" height="200">
+    <p>{{ post.description }}</p>
+
+    <form method="post" action="{% url 'post_like' post.id %}">
+        {% csrf_token %}
+        {% if is_liked %}
+            <input type="Submit" value="Unlike"> {{ like_count }}
+        {% else %}
+            <input type="Submit" value="Like"> {{ like_count }}
+        {% endif %}
+    </form>
+</body>
+</html>

@@ -13,3 +13,7 @@ wheels/
 # Database
 db.sqlite3
 db.sqlite3-journal
+
+# Media
+media/profile_pics/
+media/posts/

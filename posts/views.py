@@ -1,0 +1,98 @@
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+
+from .forms import PostForm
+from .models import Post
+
+
+@login_required
+def create_post(request):
+    """ View for creating a new post. """
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+            messages.success(request, 'You have successfully created a post!')
+            # TODO: change redirect
+            # return redirect('post_detail', pk=post.id)
+            return redirect('home')
+    else:
+        form = PostForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'posts/create_post.html', context)
+
+
+def post_detail(request, pk):
+    """ View for displaying a single post. """
+    post = get_object_or_404(Post, pk=pk)
+    like_count = post.likes.count()
+    is_liked = request.user.is_authenticated and post.likes.filter(id=request.user.id).exists()
+    context = {
+        'post': post,
+        'like_count': like_count,
+        'is_liked': is_liked,
+    }
+    return render(request, 'posts/post_detail.html', context)
+
+
+@login_required
+def post_edit(request, pk):
+    """ View for editing a post. """
+    post = get_object_or_404(Post, pk=pk)
+
+    if post.author != request.user:
+        messages.error(request, 'You are not authorized to edit this post.')
+        return redirect('post_detail', pk=post.id) # type: ignore
+
+    if request.method == 'POST':
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'You have successfully edited the post!')
+            return redirect('post_detail', pk=post.id) # type: ignore
+    else:
+        form = PostForm(instance=post)
+
+    context = {
+        'form': form,
+        'post': post,
+    }
+    return render(request, 'posts/post_edit.html', context)
+
+
+@login_required
+def post_delete(request, pk):
+    """ View for deleting a post. """
+    post = get_object_or_404(Post, pk=pk)
+
+    if post.author != request.user:
+        messages.error(request, 'You are not authorized to delete this post.')
+        return redirect('post_detail', pk=post.id) # type: ignore
+
+    if request.method == 'POST':
+        post.delete()
+        messages.success(request, 'You have successfully deleted the post!')
+        return redirect('home')
+    else:
+        context = {
+            'post': post,
+        }
+        return render(request, 'posts/post_delete.html', context)
+
+
+@login_required
+def like_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        if request.user in post.likes.all():
+            post.likes.remove(request.user)
+        else:
+            post.likes.add(request.user)
+    return redirect('post_detail', pk=pk)
