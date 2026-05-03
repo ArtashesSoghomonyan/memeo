@@ -1,0 +1,47 @@
+.message {
+    border-radius: 3px;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 8px;
+    padding-block: 10px;
+    padding-inline: 10px;
+    background-color: red;
+}
+
+/* Colors */
+
+.error {
+    background-color: #ffbaba;
+    color: #d8000c;
+}
+
+.error:hover {
+    background-color: #ffa4a4;
+}
+
+.warning {
+    background-color: #feefb3;
+    color: #9f6000;
+}
+
+.warning:hover {
+    background-color: #fed7a0;
+}
+
+.success {
+    color: #4f8a10;
+    background-color: #dff2bf;
+}
+
+.success:hover {
+    background-color: #b4f298;
+}
+
+.info {
+    background-color: #d9edf7;
+    color: #31708f;
+}
+
+.info:hover {
+    background-color: #d5d8f7;
+}
