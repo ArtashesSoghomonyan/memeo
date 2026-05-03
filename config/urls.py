@@ -7,6 +7,7 @@ urlpatterns = [
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include('posts.api_urls')),
     path('posts/', include('posts.urls')),
 ]
 
