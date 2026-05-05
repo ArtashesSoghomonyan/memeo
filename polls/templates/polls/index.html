@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Latest Polls</h2>
+<div id="poll-list" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+  {% for question in questions %}
+    {% include 'polls/partials/poll_card.html' %}
+  {% endfor %}
+</div>
+{% endblock content %}

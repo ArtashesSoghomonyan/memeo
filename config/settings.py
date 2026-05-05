@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'pages.apps.PagesConfig',
     'posts.apps.PostsConfig',
+    'polls.apps.PollsConfig',
 ]
 
 MIDDLEWARE = [

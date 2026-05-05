@@ -1,0 +1,34 @@
+<div id="poll-{{ question.id }}" class="poll-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 10px;">
+  <h3>{{ question.question_text }}</h3>
+
+  {% for choice in question.choice_set.all %}
+    <div style="margin-bottom: 8px;">
+      <button
+          hx-post="{% url 'polls:vote' question.id %}"
+          hx-target="#poll-{{ question.id }}"
+          hx-swap="outerHTML"
+          hx-vals='{"choice": "{{ choice.id }}"}'
+
+          {# If they voted for ANY choice, disable ALL buttons for this question #}
+          {% if user_has_voted %}
+              disabled
+          {% else %}
+              {% for c in question.choice_set.all %}
+                  {% if request.user in c.votes.all %}disabled{% endif %}
+              {% endfor %}
+          {% endif %}
+
+          style="padding: 10px; width: 100%; text-align: left;
+                  border: 1px solid #ccc;
+                  background-color: {% if request.user in choice.votes.all %}#d1e7dd{% else %}#ffffff{% endif %};
+                  cursor: {% if user_has_voted %}default{% else %}pointer{% endif %};"
+      >
+        {{ choice.choice_text }}
+        (<strong>{{ choice.votes.count }}</strong>)
+        {% if request.user in choice.votes.all %}
+          <span style="float: right;">✓ Your Selection</span>
+        {% endif %}
+      </button>
+    </div>
+  {% endfor %}
+</div>

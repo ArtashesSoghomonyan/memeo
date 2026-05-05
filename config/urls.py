@@ -9,6 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('posts.api_urls')),
     path('posts/', include('posts.urls')),
+    path('polls/', include('polls.urls')),
 ]
 
 if settings.DEBUG:
