@@ -1,3 +1,5 @@
+/* Messages */
+
 .message {
     border-radius: 3px;
     width: 95%;
@@ -7,8 +9,6 @@
     padding-inline: 10px;
     background-color: red;
 }
-
-/* Colors */
 
 .error {
     background-color: #ffbaba;
@@ -44,4 +44,16 @@
 
 .info:hover {
     background-color: #d5d8f7;
+}
+
+/* Registration */
+
+.field-error {
+    color: #d8000c;
+    transition: all ease-in 0.5s;
+}
+
+.field-success {
+    color: #4f8a10;
+    transition: all ease-in 0.5s;
 }

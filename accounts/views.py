@@ -66,7 +66,7 @@ def check_username(request):
             username_validator(username)
     except ValidationError:
         return HttpResponse(
-            "<p style='color: red;'>❌This username is not valid. Usernames should only contain lowercase letters and underscores.</p>"
+            "<p class='field-error'>❌This username is not valid. Usernames should only contain lowercase letters and underscores.</p>"
         )
 
     if username == '':
@@ -74,9 +74,9 @@ def check_username(request):
 
     if get_user_model().objects.filter(username=username).exists():
         return HttpResponse(
-            "<p style='color: red;'>❌This username is already taken.</p>"
+            "<p class='field-error'>❌This username is already taken.</p>"
         )
-    return HttpResponse("<p style='color: green;'>☑️ This username is available.</p>")
+    return HttpResponse("<p class='field-success'>☑️ This username is available.</p>")
 
 
 def check_email(request):
@@ -86,16 +86,16 @@ def check_email(request):
         if email != '':
             email_validator(email)
     except ValidationError:
-        return HttpResponse("<p style='color: red;'>❌This email is not valid.</p>")
+        return HttpResponse("<p class='field-error'>❌This email is not valid.</p>")
 
     if email == '':
         return HttpResponse("")
 
     if get_user_model().objects.filter(email=email).exists():
         return HttpResponse(
-            "<p style='color: red;'>❌This email is already in use.</p>"
+            "<p class='field-error'>❌This email is already in use.</p>"
         )
-    return HttpResponse("<p style='color: green;'>☑️ This email is available.</p>")
+    return HttpResponse("<p class='field-success'>☑️ This email is available.</p>")
 
 
 def check_password1(request):
@@ -105,12 +105,12 @@ def check_password1(request):
         if password1 != '':
             validate_password(password1)
     except ValidationError as e:
-        return HttpResponse(f"<p style='color: red;'>❌{ e.messages[0] }</p>")
+        return HttpResponse(f"<p class='field-error'>❌{ e.messages[0] }</p>")
 
     if password1 == '':
         return HttpResponse("")
 
-    return HttpResponse("<p style='color: green;'>☑️ This password is valid.</p>")
+    return HttpResponse("<p class='field-success'>☑️ This password is valid.</p>")
 
 
 def check_password2(request):
@@ -118,6 +118,6 @@ def check_password2(request):
     password2 = request.POST.get('password2')
 
     if password2 != '' and password2 != password1:
-        return HttpResponse("<p style='color: red;'>❌Passwords do not match.</p>")
+        return HttpResponse("<p class='field-error'>❌Passwords do not match.</p>")
 
-    return HttpResponse("<p style='color: green;'>☑️ Passwords match.</p>")
+    return HttpResponse("<p class='field-success'>☑️ Passwords match.</p>")

@@ -35,7 +35,7 @@ class SignupForm(UserCreationForm):
                 'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
                 'placeholder': 'Username',
                 'hx-post': reverse_lazy('check_username'),
-                'hx-trigger': 'keyup',
+                'hx-trigger': 'keyup changed delay:2s',
                 'hx-target': '#username-error',
             }
         ),
@@ -50,7 +50,7 @@ class SignupForm(UserCreationForm):
                 'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
                 'placeholder': 'Email',
                 'hx-post': reverse_lazy('check_email'),
-                'hx-trigger': 'keyup',
+                'hx-trigger': 'keyup changed delay:2s',
                 'hx-target': '#email-error',
             }
         ),
@@ -86,7 +86,7 @@ class SignupForm(UserCreationForm):
                 'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
                 'placeholder': 'Password',
                 'hx-post': reverse_lazy('check_password1'),
-                'hx-trigger': 'keyup',
+                'hx-trigger': 'keyup changed delay:2s',
                 'hx-target': '#password1-error',
             }
         ),
@@ -98,7 +98,7 @@ class SignupForm(UserCreationForm):
                 'class': 'w-full border rounded py-2 px-3 text-gray-700 mb-3',
                 'placeholder': 'Confirm password',
                 'hx-post': reverse_lazy('check_password2'),
-                'hx-trigger': 'keyup',
+                'hx-trigger': 'keyup changed delay:2s',
                 'hx-target': '#password2-error',
             }
         ),
