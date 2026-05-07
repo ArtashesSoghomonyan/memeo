@@ -23,4 +23,4 @@ def status_404(request, exception):
         'status_code': 404,
         'message': 'Page not found',
     }
-    return render(request, 'error.html', context)
+    return render(request, 'error.html', context, status=404)
