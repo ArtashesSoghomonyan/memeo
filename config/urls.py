@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+import pages.views
+
 urlpatterns = [
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
@@ -14,3 +16,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = pages.views.status_404
