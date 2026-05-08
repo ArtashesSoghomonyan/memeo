@@ -23,5 +23,22 @@
       <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Like</button>
     {% endif %}
   </form>
+
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'add_comment' post.id %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Post Comment</button>
+  </form>
+  {% endif %}
+
+  {% for comment in comments %}
+    <div class="border-b border-gray-200 py-2">
+      <p class="text-sm text-gray-600"><strong>{{ comment.author.username }}</strong> – {{ comment.publication_date }}</p>
+      <p class="text-gray-800">{{ comment.content }}</p>
+    </div>
+  {% empty %}
+    <p class="text-gray-500">No comments yet. Be the first!</p>
+  {% endfor %}
 </div>
 {% endblock %}

@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from .models import Post
+from .models import Comment, Post
 
 
 class PostForm(ModelForm):
@@ -10,3 +10,9 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['image', 'description']
+
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
