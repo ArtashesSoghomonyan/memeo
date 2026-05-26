@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
@@ -22,6 +23,12 @@
     <img src="{{ post.image.url }}" alt="Post image" class="w-full max-h-96 object-contain rounded">
     <!-- Caption -->
     <p class="mt-2 text-gray-800">{{ post.description }}</p>
+    <!-- Like icon -->
+    {% if user in post.likes.all %}
+      <a href="{% url 'post_like' post.id %}"><img src="{% static 'icons/filled_heart.svg' %}" class="h-3" alt="Filled heart"></a>
+    {% else %}
+      <a href="{% url 'post_like' post.id %}"><img src="{% static 'icons/empty_heart.svg' %}" class="h-3 w-3" alt="Heart"></a>
+    {% endif %}
     <!-- Likes count -->
     <p class="text-sm text-gray-500 mt-1">{{ post.likes.count }} like(s)</p>
   </div>

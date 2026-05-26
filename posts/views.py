@@ -100,11 +100,10 @@ def post_delete(request, pk):
 @login_required
 def like_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
-    if request.method == 'POST':
-        if request.user in post.likes.all():
-            post.likes.remove(request.user)
-        else:
-            post.likes.add(request.user)
+    if request.user in post.likes.all():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
     return redirect('post_detail', pk=pk)
 
 
